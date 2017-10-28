@@ -46,12 +46,12 @@ breakpointsEmitter.subscribe('small', breakpoint => {
 });
 
 console.log(
-  'Current breakpoint by init breakpoints',
+  'Current breakpoint according to init breakpoints',
   getCurrentBreakpoint()
 );
 
 console.log(
-  'Current breakpoint by custom breakpoints',
+  'Current breakpoint according to custom breakpoints',
   getCurrentBreakpoint({
     medium: '(min-width: 992px)',
     small: '(min-width: 768px)',
