@@ -5,7 +5,8 @@ import createEmitter from './createEmitter';
 let breakpoints = {},
   prevBreakpoint = null,
   breakpointsBroadcast = {},
-  breakpointsEmitter = {};
+  breakpointsEmitter = {},
+  initResizeListener = false;
 
 export function getBreakpointsBroadcast() {
   return breakpointsBroadcast;
@@ -15,8 +16,16 @@ export function getBreakpointsEmitter() {
   return breakpointsEmitter;
 }
 
-export function getCurrentBreakpoint(breakpoints) {
-  const breakpointKeys = Object.keys(breakpoints);
+const getBreakpoints = externalBreakpoints => {
+  if (externalBreakpoints)
+    return externalBreakpoints;
+    
+  return breakpoints;
+};
+
+export function getCurrentBreakpoint(externalBreakpoints) {
+  const breakpoints = getBreakpoints(externalBreakpoints),
+    breakpointKeys = Object.keys(breakpoints);
 
   let nextBreakpoint = null,
     keyNum = 0;
@@ -37,7 +46,7 @@ export function getCurrentBreakpoint(breakpoints) {
 }
 
 const handleResize = throttle(() => {
-  const nextBreakpoint = getCurrentBreakpoint(breakpoints);
+  const nextBreakpoint = getCurrentBreakpoint();
 
   if (nextBreakpoint && nextBreakpoint !== prevBreakpoint) {
     prevBreakpoint = nextBreakpoint;
@@ -50,13 +59,16 @@ const handleResize = throttle(() => {
 export function initBreakpoints(newBreakpoints) {
   if (newBreakpoints)
     breakpoints = newBreakpoints;
-  
-  const currentBreakpoint = getCurrentBreakpoint(breakpoints);
+
+  const currentBreakpoint = getCurrentBreakpoint();
 
   breakpointsBroadcast = createBroadcast(currentBreakpoint);
   breakpointsEmitter = createEmitter();
 
   prevBreakpoint = currentBreakpoint;
 
-  window.addEventListener('resize', handleResize);
+  if (!initResizeListener) {
+    initResizeListener = true;
+    window.addEventListener('resize', handleResize);
+  }
 }

@@ -1,20 +1,26 @@
 {
   "name": "media-breakpoints-watcher",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Library for easy use of media breakpoints in js",
+  "main": "lib/index.js",
   "scripts": {
     "start": "webpack-dev-server --config ./examples/webpack.config.js",
     "lint": "run-s lint:js",
     "lint:js": "eslint .",
     "prepublishOnly": "rimraf ./lib && babel ./src --out-dir ./lib"
   },
+  "files": [
+    "lib",
+    "src"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dmitrymalakhov/media-breakpoints-watcher.git"
   },
   "keywords": [
-    "mediaquery"
+    "media-queries",
+    "css-in-js",
+    "breakpoints"
   ],
   "author": "Dmitry Malakhov <dmitrii.malakhov@gmail.com> (https://twitter.com/i_am_d_m)",
   "license": "MIT",
