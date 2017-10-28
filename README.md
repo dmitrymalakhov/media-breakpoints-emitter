@@ -65,9 +65,10 @@ For unsubscribe
 
 ```javascript
 const unsubscribe = breakpointsBroadcast.subscribe(fn);
+unsubscribe();
 
 /../
 
-unsubscribe();
+breakpointsEmitter.subscribe('change', fn);
 breakpointsEmitter.unsubscribe('change', fn);
 ```
