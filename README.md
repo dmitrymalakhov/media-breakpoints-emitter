@@ -22,7 +22,7 @@ import {
   getBreakpointsBroadcast,
   getBreakpointsEmitter,
   getCurrentBreakpoint,
-} from '../src/index';
+} from 'media-breakpoints-watcher';
 
 initBreakpoints({
   large: '(min-width: 1200px)',
