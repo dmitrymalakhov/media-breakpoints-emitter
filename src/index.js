@@ -1,4 +1,3 @@
-import throttle from 'lodash.throttle';
 import createBroadcast from './createBroadcast';
 import createEmitter from './createEmitter';
 
@@ -45,7 +44,7 @@ export function getCurrentBreakpoint(externalBreakpoints) {
   return nextBreakpoint;
 }
 
-const handleResize = throttle(() => {
+const handleResize = () => {
   const nextBreakpoint = getCurrentBreakpoint();
 
   if (nextBreakpoint && nextBreakpoint !== prevBreakpoint) {
@@ -54,7 +53,7 @@ const handleResize = throttle(() => {
     breakpointsEmitter.dispatch(nextBreakpoint, nextBreakpoint);
     breakpointsEmitter.dispatch('change', nextBreakpoint);
   }
-}, 200);
+};
 
 export function initBreakpoints(newBreakpoints) {
   if (newBreakpoints)

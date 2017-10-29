@@ -33,17 +33,13 @@ initBreakpoints({
 const breakpointsBroadcast = getBreakpointsBroadcast();
 const breakpointsEmitter = getBreakpointsEmitter();
 
-breakpointsBroadcast.subscribe(breakpoint => {
-  console.log('BreakpointsBroadcast:', breakpoint);
-});
+// don't forget to add throttle to handler of resize 
+const handleResize = breakpoint => console.log(breakpoint);
 
-breakpointsEmitter.subscribe('change', breakpoint => {
-  console.log('BreakpointsEmitter: event change: ', breakpoint);
-});
+breakpointsBroadcast.subscribe(handleResize);
 
-breakpointsEmitter.subscribe('small', breakpoint => {
-  console.log('BreakpointsEmitter: event small:', breakpoint);
-});
+breakpointsEmitter.subscribe('change', handleResize);
+breakpointsEmitter.subscribe('small', handleResize);
 
 console.log(
   'Current breakpoint according to init breakpoints',
@@ -57,18 +53,16 @@ console.log(
     small: '(min-width: 768px)',
   })
 );
-
-
 ```
 
 For unsubscribe
 
 ```javascript
-const unsubscribe = breakpointsBroadcast.subscribe(fn);
+const unsubscribe = breakpointsBroadcast.subscribe(handleResize);
 unsubscribe();
 
 /../
 
-breakpointsEmitter.subscribe('change', fn);
-breakpointsEmitter.unsubscribe('change', fn);
+breakpointsEmitter.subscribe('change', handleResize);
+breakpointsEmitter.unsubscribe('change', handleResize);
 ```

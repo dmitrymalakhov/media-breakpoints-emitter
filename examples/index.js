@@ -1,3 +1,5 @@
+/* eslint-disable no-console*/
+
 import {
   initBreakpoints,
   getBreakpointsBroadcast,
@@ -11,22 +13,15 @@ initBreakpoints({
   small: '(min-width: 768px)',
 });
 
-const breakpointsBroadcast = getBreakpointsBroadcast();
-const breakpointsEmitter = getBreakpointsEmitter();
+const breakpointsBroadcast = getBreakpointsBroadcast(),
+  breakpointsEmitter = getBreakpointsEmitter();
 
-/* eslint-disable no-console*/
+const handleResize = breakpoint => console.log(breakpoint);
 
-breakpointsBroadcast.subscribe(breakpoint => {
-  console.log('BreakpointsBroadcast:', breakpoint);
-});
+breakpointsBroadcast.subscribe(handleResize);
 
-breakpointsEmitter.subscribe('change', breakpoint => {
-  console.log('BreakpointsEmitter: event change: ', breakpoint);
-});
-
-breakpointsEmitter.subscribe('small', breakpoint => {
-  console.log('BreakpointsEmitter: event small:', breakpoint);
-});
+breakpointsEmitter.subscribe('change', handleResize);
+breakpointsEmitter.subscribe('small', handleResize);
 
 console.log(
   'Current breakpoint by init breakpoints',
